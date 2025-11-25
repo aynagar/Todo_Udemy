@@ -3,7 +3,13 @@
     <title>Welcome Page</title>
 </head>
 <body>
-<h1>Welcome To Ayush HomePage</h1>
+<div>Welcome To Ayush HomePage</div>
+<div>
+    Your Name: ${name} </div>
+<div>
+    Your Password: ${password} </div>
+</div>
+
 
 
 </body>

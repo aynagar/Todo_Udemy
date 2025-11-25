@@ -21,7 +21,10 @@ public class LoginController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String welcomepage(){
+    public String welcomepage(@RequestParam String name, @RequestParam String password, ModelMap model){
+        model.put("name",name);
+        model.put("password",password);
+
         return "Welcome";
     }
 }
