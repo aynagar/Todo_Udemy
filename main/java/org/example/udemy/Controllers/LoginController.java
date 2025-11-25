@@ -1,30 +1,37 @@
 package org.example.udemy.Controllers;
-
-
+import org.example.udemy.Service.AuthenticationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 //http://localhost:8080/login?name=ayush
 @Controller
 public class LoginController {
+    private AuthenticationService authenticationService;
 
+    public LoginController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String gotoLoginPage(){
+    public String gotoLoginPage() {
         return "login";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String welcomepage(@RequestParam String name, @RequestParam String password, ModelMap model){
-        model.put("name",name);
-        model.put("password",password);
+    public String welcomepage(@RequestParam String name,
+                              @RequestParam String password,
+                              ModelMap model) {
+        if (authenticationService.authenticate(name, password)) {
+            model.put("name", name);
+         //   model.put("password", password);
 
-        return "Welcome";
+            return "Welcome";
+        }
+        model.put("errorMessage", "Invalid Credentials");
+        return "login";
     }
 }
